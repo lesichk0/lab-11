@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Перетягування квадрата всередині іншого квадрата</title>
+    <style>
+        #outerSquare {
+            position: relative;
+            width: 500px;
+            height: 500px;
+            border: 2px solid gray;
+        }
+        #innerSquare {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="outerSquare" onmousedown="startDrag(event)">
+        <div id="innerSquare"></div>
+    </div>
+
+    <script>
+        var innerSquare = document.getElementById('innerSquare');
+        var outerSquare = document.getElementById('outerSquare');
+        var isDragging = false;
+
+        function startDrag(event) {
+            isDragging = true;
+            var offsetX = event.clientX - innerSquare.offsetLeft;
+            var offsetY = event.clientY - innerSquare.offsetTop;
+
+            document.onmousemove = function(event) {
+                if (isDragging) {
+                    var x = event.clientX - offsetX;
+                    var y = event.clientY - offsetY;
+
+                    x = Math.min(Math.max(x, 0), outerSquare.clientWidth - innerSquare.offsetWidth);
+                    y = Math.min(Math.max(y, 0), outerSquare.clientHeight - innerSquare.offsetHeight);
+
+                    innerSquare.style.left = x + 'px';
+                    innerSquare.style.top = y + 'px';
+                }
+            };
+
+            document.onmouseup = function() {
+                isDragging = false;
+            };
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Переміщення квадрата по кривій, що нагадує коло</title>
+    <style>
+        #circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border: 2px solid black;
+            border-radius: 50%;
+            top: 50px;
+            left: 50px;
+            z-index: -1; /* Під квадратом */
+        }
+        #square {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="circle"></div>
+    <div id="square"></div>
+
+    <script>
+        var R = 100;
+        var centerX = 150;
+        var centerY = 150;
+        var t = 0;
+
+        function moveSquare() {
+            var x = centerX + R * Math.cos(t);
+            var y = centerY + R * Math.sin(t);
+            document.getElementById('square').style.left = x + 'px';
+            document.getElementById('square').style.top = y + 'px';
+            t += 0.02;
+            if (t >= Math.PI * 2) t = 0;
+            requestAnimationFrame(moveSquare);
+        }
+
+        moveSquare();
+    </script>
+</body>
+</html>
